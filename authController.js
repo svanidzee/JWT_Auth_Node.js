@@ -34,6 +34,7 @@ class authController {
       const hashPassword = bcrypt.hashSync(password, 7);
 
       // find role
+      //   const userRole = await Role.findOne({ value: 'Admin' });
       const userRole = await Role.findOne({ value: 'USER' });
 
       // create user
@@ -84,7 +85,9 @@ class authController {
       //   const adminRole = new Role({ value: 'ADMIN' });
       //   await userRole.save();
       //   await adminRole.save();
-      res.json('server works');
+
+      const users = await User.find();
+      res.json(users);
     } catch (error) {}
   }
 }
