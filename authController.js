@@ -1,6 +1,7 @@
 const User = require('./models/User');
 const Role = require('./models/Role');
 const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 class authController {
   async registration(req, res) {
