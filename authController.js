@@ -1,9 +1,10 @@
-const User = require('./models/User');
-const Role = require('./models/Role');
-const bcrypt = require('bcryptjs');
-const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-const { secret } = require('./config');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
+
+import { User } from './models/User.js';
+import { Role } from './models/Role.js';
+import { secret } from './config.js';
 
 const generateAccessToken = (id, roles) => {
   const payload = {
@@ -45,8 +46,8 @@ class authController {
       return res.json({
         message: 'User Successfully Registered',
       });
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.error(e);
       res.status(400).json({ message: 'Registration error' });
     }
   }
@@ -73,8 +74,8 @@ class authController {
       // generate jsonwebtoken
       const token = generateAccessToken(user._id, user.roles);
       return res.json({ token });
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.error(e);
       res.status(400).json({ message: 'Login error' });
     }
   }
@@ -88,8 +89,10 @@ class authController {
 
       const users = await User.find();
       res.json(users);
-    } catch (error) {}
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 
-module.exports = new authController();
+export default new authController();

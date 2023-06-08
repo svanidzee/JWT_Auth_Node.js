@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const { secret } = require('../config');
+import jwt from 'jsonwebtoken';
+import { secret } from '../config.js';
 
-module.exports = function (req, res, next) {
+export default function (req, res, next) {
   if (req.method === 'OPTIONS') {
     next();
   }
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
     req.user = decodedData;
     next();
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return res.status(403).json({ message: 'User not signed' });
   }
-};
+}
